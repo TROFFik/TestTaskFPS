@@ -6,6 +6,7 @@ public class InputController : MonoBehaviour
     public static InputController Instance { get; private set; }
 
     public Action<Vector3> rotateAction;
+    public Action clickAction;
 
     private Vector2 _rotationVector = new Vector2();
 
@@ -22,6 +23,17 @@ public class InputController : MonoBehaviour
     private void Update()
     {
         InputRotation();
+
+        InputClick();
+
+    }
+
+    private void InputClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            clickAction?.Invoke();
+        }
     }
 
     private void InputRotation()
@@ -44,5 +56,4 @@ public class InputController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }

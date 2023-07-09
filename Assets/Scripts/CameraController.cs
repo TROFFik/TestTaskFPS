@@ -3,7 +3,11 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private float _mouseSensitivity = 100.0f;
+
+    [Tooltip("The maximum angle that the camera can be raised")]
     [SerializeField] private float _maxAngleX = 90.0f;
+
+    [Tooltip("The minimum angle that the camera can be lowered")]
     [SerializeField] private float _minAngleX = -90.0f;
 
     [SerializeField] private Transform _playerBody;
