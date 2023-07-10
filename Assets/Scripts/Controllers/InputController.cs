@@ -8,7 +8,6 @@ public class InputController : MonoBehaviour
     public Action<Vector3> rotateAction;
     public Action clickLeftButtonAction;
     public Action clickRightButtonAction;
-    public Action clickEAction;
 
     private Vector2 _rotationVector = new Vector2();
 
@@ -34,11 +33,6 @@ public class InputController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             clickRightButtonAction?.Invoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            clickEAction?.Invoke();
         }
     }
 

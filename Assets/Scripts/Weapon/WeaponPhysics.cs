@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class WeaponPhysics : WeaponCore
 {
+    [SerializeField] private Pool _pool = null;
+
     [SerializeField] private Transform _shootPoint = null;
     [SerializeField] private Projectile _projectile = null;
     [SerializeField] private float _force = 10f;
@@ -15,18 +17,25 @@ public class WeaponPhysics : WeaponCore
 
     protected override void Shoot()
     {
-        Debug.Log(gameObject.name);
         if (_canShoot)
         {
-            _canShoot = false;
+            GameObject tempProjectile = _pool.GetPoolObject();
 
-            Projectile tempProjectile = Instantiate(_projectile, _shootPoint.position, _shootPoint.rotation);
-            tempProjectile.Damage = _damage;
+            Debug.Log(1);
+            if (tempProjectile != null)
+            {
+                Debug.Log(2);
+                _canShoot = false;
 
-            Vector3 direction = DirectionCalculation();
-            tempProjectile.gameObject.GetComponent<Rigidbody>().AddForce(direction * _force);
+                tempProjectile.SetActive(true);
+                tempProjectile.transform.position = _shootPoint.position;
+                tempProjectile.gameObject.GetComponent<Projectile>().Damage = _damage;
 
-            Timer();
+                Vector3 direction = DirectionCalculation();
+                tempProjectile.gameObject.GetComponent<Rigidbody>().AddForce(direction * _force);
+
+                Timer();
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponRay : WeaponCore
+public class WeaponRay : WeaponCore 
 {
     [SerializeField] private float _maxDistance = 0;
 

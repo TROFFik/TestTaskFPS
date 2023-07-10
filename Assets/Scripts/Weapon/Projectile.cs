@@ -1,10 +1,18 @@
-using System.Threading.Tasks;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(PoolObject))]
 public class Projectile : MonoBehaviour
 {
+    private Rigidbody _rigidbody = null;
+    private PoolObject _poolObject = null;
+
     private float _damage = 0;
+
+    private void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        _poolObject = GetComponent<PoolObject>();
+    }
 
     public float Damage
     {
@@ -16,12 +24,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Timer();
-    }
-
-    protected async void Timer()
-    {
-        await Task.Delay(10);
-        Destroy(gameObject);
+        _poolObject.ReturnToPool();
+        _rigidbody.Sleep();
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshCollider))]
-public class MeshDemo : MonoBehaviour
+public class MeshDemo : MonoBehaviour //To demonstrate hits and physics, we deform the mesh where the physical projectile hit
 {
     [SerializeField] private int _xSize;
     [SerializeField] private int _ySize;
@@ -15,7 +15,7 @@ public class MeshDemo : MonoBehaviour
 
     private Vector3[] _vertices;
     private int[] _triangles;
-    private int _textureSize = 0;
+    private int _textureSize = 1;
 
 
     private void Start()
