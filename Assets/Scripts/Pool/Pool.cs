@@ -79,4 +79,12 @@ public class Pool : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnDestroy()
+    {
+        foreach (var projectile in _listObjects)
+        {
+            projectile.collisionAction -= ReturnPoolObject;
+        }
+    }
 }
