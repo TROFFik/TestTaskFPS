@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class InputController : MonoBehaviour
+public partial class InputController : MonoBehaviour
 {
     public static InputController Instance { get; private set; }
 
@@ -23,25 +23,21 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        InputRotation();
 
-        if (Input.GetMouseButtonDown(0))
+#if UNITY_ANDROID
+
+        if (Input.touchCount > 0)
         {
-            clickLeftButtonAction?.Invoke();
+            InputSwipe();
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            clickRightButtonAction?.Invoke();
-        }
-    }
+#endif
 
-    private void InputRotation()
-    {
-        _rotationVector.x -= Input.GetAxis("Mouse Y") * Time.deltaTime;
-        _rotationVector.y = Input.GetAxis("Mouse X") * Time.deltaTime;
+#if UNITY_STANDALONE_WIN
 
-        rotateAction?.Invoke(_rotationVector);
+        InputMouse();
+
+#endif
     }
 
     private void CreateSingleton()

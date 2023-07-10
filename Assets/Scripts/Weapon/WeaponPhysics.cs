@@ -2,10 +2,7 @@ using UnityEngine;
 
 public class WeaponPhysics : WeaponCore
 {
-    [SerializeField] private Pool _pool = null;
-
     [SerializeField] private Transform _shootPoint = null;
-    [SerializeField] private Projectile _projectile = null;
     [SerializeField] private float _force = 10f;
 
     [Tooltip("Distance at crosshairs line and shooting line intersect")]
@@ -19,12 +16,10 @@ public class WeaponPhysics : WeaponCore
     {
         if (_canShoot)
         {
-            GameObject tempProjectile = _pool.GetPoolObject();
+            GameObject tempProjectile = Pool.Instance.GetPoolObject();
 
-            Debug.Log(1);
             if (tempProjectile != null)
             {
-                Debug.Log(2);
                 _canShoot = false;
 
                 tempProjectile.SetActive(true);

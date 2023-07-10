@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class Pool : MonoBehaviour
 {
+    public static Pool Instance { get; private set; }
+
     [SerializeField] private PoolObject _poolObject = null;
     [SerializeField] private int _minObjectCount = 0;
     [SerializeField] private int _maxObjectCount = 0;
 
     private int _currentObjectCount = 0;
     private List<PoolObject> _listObjects = new List<PoolObject>();
+
+    private void Awake()
+    {
+        CreateSingleton();
+    }
 
     private void Start()
     {
@@ -50,5 +57,18 @@ public class Pool : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void CreateSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
