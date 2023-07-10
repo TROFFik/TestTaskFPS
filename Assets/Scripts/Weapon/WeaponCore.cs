@@ -15,7 +15,7 @@ public class WeaponCore : MonoBehaviour
 
     }
 
-    protected async void Timer()
+    protected async void WaitCooldown()
     {
         await Task.Delay(_cooldown);
         _canShoot = true;

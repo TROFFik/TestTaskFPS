@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private Transform _playerBody;
 
-    void Start()
+    private void Start()
     {
         InputController.Instance.rotateAction += Rotate;
     }
@@ -23,5 +23,10 @@ public class CameraController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(value.x, 0.0f, 0.0f);
         _playerBody.Rotate(Vector3.up * value.y * _sensitivity);
+    }
+
+    private void OnDestroy()
+    {
+        InputController.Instance.rotateAction -= Rotate;
     }
 }

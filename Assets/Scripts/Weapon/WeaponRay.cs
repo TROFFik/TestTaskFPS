@@ -27,7 +27,7 @@ public class WeaponRay : WeaponCore
                 DrawPixel(hit);
             }
 
-            Timer();
+            WaitCooldown();
         }
     }
 
@@ -43,5 +43,10 @@ public class WeaponRay : WeaponCore
             drawObject.Texture.SetPixel(rayX, rayY, Color.red);
             drawObject.Texture.Apply();
         }
+    }
+
+    private void OnDestroy()
+    {
+        InputController.Instance.clickRightButtonAction -= Shoot;
     }
 }

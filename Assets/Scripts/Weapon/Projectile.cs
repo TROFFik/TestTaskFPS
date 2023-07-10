@@ -1,17 +1,25 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(PoolObject))]
+[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
+    public Action<Projectile> collisionAction;
+
     private Rigidbody _rigidbody = null;
-    private PoolObject _poolObject = null;
 
     private float _damage = 0;
+    private bool _ready = true;
+
+    public bool Ready
+    {
+        get { return _ready; }
+        set { _ready = value; }
+    }
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _poolObject = GetComponent<PoolObject>();
     }
 
     public float Damage
@@ -24,7 +32,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        _poolObject.ReturnToPool();
+        collisionAction?.Invoke(this);
         _rigidbody.Sleep();
     }
 }

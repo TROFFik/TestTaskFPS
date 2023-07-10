@@ -5,12 +5,12 @@ public class Pool : MonoBehaviour
 {
     public static Pool Instance { get; private set; }
 
-    [SerializeField] private PoolObject _poolObject = null;
+    [SerializeField] private Projectile _poolObject = null;
     [SerializeField] private int _minObjectCount = 0;
     [SerializeField] private int _maxObjectCount = 0;
 
     private int _currentObjectCount = 0;
-    private List<PoolObject> _listObjects = new List<PoolObject>();
+    private List<Projectile> _listObjects = new List<Projectile>();
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class Pool : MonoBehaviour
     }
     private void CreatePool()
     {
-        _listObjects = new List<PoolObject>(_minObjectCount);
+        _listObjects = new List<Projectile>(_minObjectCount);
 
         for (int i = 0; i < _minObjectCount; i++)
         {
@@ -32,22 +32,23 @@ public class Pool : MonoBehaviour
         }
     }
 
-    private GameObject CreateObject()
+    private Projectile CreateObject()
     {
-        GameObject TempObject;
-        TempObject = Instantiate(_poolObject.gameObject, transform);
-        _listObjects.Add(TempObject.GetComponent<PoolObject>());
-        TempObject.SetActive(false);
+        Projectile TempObject;
+        TempObject = Instantiate(_poolObject.gameObject, transform).GetComponent<Projectile>();
+        _listObjects.Add(TempObject.GetComponent<Projectile>());
+        TempObject.gameObject.SetActive(false);
+        TempObject.collisionAction += ReturnPoolObject;
         return TempObject;
     }
-    public GameObject GetPoolObject()
+    public Projectile GetPoolObject()
     {
         foreach (var item in _listObjects)
         {
             if (item.Ready)
             {
                 item.Ready = false;
-                return item.gameObject;
+                return item;
             }
         }
         if (_currentObjectCount < _maxObjectCount)
@@ -57,6 +58,13 @@ public class Pool : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void ReturnPoolObject(Projectile projectile)
+    {
+        projectile.gameObject.SetActive(false);
+        projectile.gameObject.transform.position = transform.position;
+        projectile.Ready = true;
     }
 
     private void CreateSingleton()

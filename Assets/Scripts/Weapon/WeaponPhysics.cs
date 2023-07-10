@@ -16,20 +16,20 @@ public class WeaponPhysics : WeaponCore
     {
         if (_canShoot)
         {
-            GameObject tempProjectile = Pool.Instance.GetPoolObject();
+            Projectile tempProjectile = Pool.Instance.GetPoolObject();
 
             if (tempProjectile != null)
             {
                 _canShoot = false;
 
-                tempProjectile.SetActive(true);
+                tempProjectile.gameObject.SetActive(true);
                 tempProjectile.transform.position = _shootPoint.position;
-                tempProjectile.gameObject.GetComponent<Projectile>().Damage = _damage;
+                tempProjectile.Damage = _damage;
 
                 Vector3 direction = DirectionCalculation();
                 tempProjectile.gameObject.GetComponent<Rigidbody>().AddForce(direction * _force);
 
-                Timer();
+                WaitCooldown();
             }
         }
     }
@@ -41,5 +41,10 @@ public class WeaponPhysics : WeaponCore
         Vector3 direction = (worldPoint - _shootPoint.position).normalized;
 
         return direction;
+    }
+
+    private void OnDestroy()
+    {
+        InputController.Instance.clickLeftButtonAction -= Shoot;
     }
 }
