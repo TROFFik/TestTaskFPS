@@ -6,7 +6,9 @@ public class InputController : MonoBehaviour
     public static InputController Instance { get; private set; }
 
     public Action<Vector3> rotateAction;
-    public Action clickAction;
+    public Action clickLeftButtonAction;
+    public Action clickRightButtonAction;
+    public Action clickEAction;
 
     private Vector2 _rotationVector = new Vector2();
 
@@ -24,15 +26,19 @@ public class InputController : MonoBehaviour
     {
         InputRotation();
 
-        InputClick();
-
-    }
-
-    private void InputClick()
-    {
         if (Input.GetMouseButtonDown(0))
         {
-            clickAction?.Invoke();
+            clickLeftButtonAction?.Invoke();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            clickRightButtonAction?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            clickEAction?.Invoke();
         }
     }
 

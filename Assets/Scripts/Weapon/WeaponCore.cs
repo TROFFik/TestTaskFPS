@@ -10,11 +10,6 @@ public class WeaponCore : MonoBehaviour
 
     protected bool _canShoot = true;
 
-    private void Start()
-    {
-        InputController.Instance.clickAction += Shoot;
-    }
-
     protected virtual void Shoot()
     {
 
